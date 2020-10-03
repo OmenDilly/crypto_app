@@ -1,6 +1,5 @@
 <template>
-  <div class="table__container">
-    <table class="table__card">
+	    <table class="table__card">
       <thead class='header'>
         <tr>
           <th>Покупка</th>
@@ -27,7 +26,7 @@
                     {{parseFloat(item[1])}}
                   </td>
                   <td class='total'>
-                    {{parseFloat(item[0] * item[1]).toFixed(6)}}
+                    {{parseFloat(item[0] * item[1]).toFixed(5)}}
                   </td>
                 </tr>
               </tbody>
@@ -51,7 +50,7 @@
                     {{parseFloat(item[1])}}
                   </td>
                   <td class='total'>
-                    {{parseFloat(item[0] * item[1]).toFixed(6)}}
+                    {{parseFloat(item[0] * item[1]).toFixed(3)}}
                   </td>
                 </tr>
               </tbody>
@@ -60,7 +59,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
 </template>
 
 <script>
@@ -77,70 +75,66 @@ export default {
 </script>
 
 <style lang='sass'>
-  .table__container
-    display: grid
-    justify-items: center
-    background-color: $backgroundSecondary
-    .table__card
-      background-color: $backgroundPrimary
-      text-align: center
-      width: 60%
-      margin: 20px 0
-      padding: 10px 5px
-      box-shadow: $shadow
-      border-radius: $radius
-      .header
-        display: table
-        width: 100%
-        table-layout: fixed
-      .body
-        @extend .header
-        display: block
-        overflow: hidden
-        table-layout: fixed
-        transition: all .3s ease-in-out
-        max-height: 500px
-        &::-webkit-scrollbar
-          border-radius: $radius
-          height: 10px
-          width: 8px
-        
+	.table__card
+		background-color: $backgroundPrimary
+		text-align: center
+		width: 60%
+		margin: 20px 0
+		padding: 10px 5px
+		box-shadow: $shadow
+		border-radius: $radius
+		.header
+			display: table
+			width: 100%
+			table-layout: fixed
+		.body
+			@extend .header
+			display: block
+			overflow: hidden
+			table-layout: fixed
+			transition: all .3s ease-in-out
+			max-height: 500px
+			&::-webkit-scrollbar
+				border-radius: $radius
+				height: 10px
+				width: 8px
+			
 
-        &::-webkit-scrollbar-thumb 
-          background: #999
-          border-radius: $radius
-        
+			&::-webkit-scrollbar-thumb 
+				background: #999
+				border-radius: $radius
+			
 
-        &::-webkit-scrollbar-track 
-          border-radius: $radius
-        
-        &:hover
-          overflow-y: scroll
-          overflow-y: overlay
-          
-        .asks
-          thead
-            color: $fontSecondary
-          .asks__item
-            color: $error
-        .bids
-          thead
-            color: $fontSecondary
-          .bids__item
-            color: $success
-          
-      tr
-        @extend .header
-        padding: 5px
-        &::nth-child(even)
-          &:hover
-            background-color: $primary
+			&::-webkit-scrollbar-track 
+				border-radius: $radius
+			
+			&:hover
+				overflow-y: scroll
+				overflow-y: overlay
+				
+			.asks
+				thead
+					color: $fontSecondary
+				.asks__item
+					color: $error
+			.bids
+				thead
+					color: $fontSecondary
+				.bids__item
+					color: $success
+				
+		tr
+			@extend .header
+			padding: 5px
+			&::nth-child(even)
+				&:hover
+					background-color: $primary
 
-        &:nth-child(add)
-          @extend ::nth-child(even)
-          
+			&:nth-child(add)
+				@extend ::nth-child(even)
+				
 
-      .bid
-      .title
-        color: $primary
+		.bid
+		.title
+			color: $primary
 </style>
