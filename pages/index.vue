@@ -1,5 +1,9 @@
 <template>
   <div class="table__container">
+    <div class="sidebar">
+      <FilterWindow/>
+      <DiffStream/>
+    </div>
     <table class="table__card">
       <thead class='header'>
         <tr>
@@ -19,7 +23,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in depth.bids" :key='item.id' class='bids__item'>
+                <tr v-for="(item, index) in depth.bids" :key='index' class='bids__item'>
                   <td class='price'>
                     {{parseFloat(item[0])}}
                   </td>
@@ -43,7 +47,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in depth.asks" :key='item.index' class='asks__item'>
+                <tr v-for="(item, index) in depth.asks" :key='index' class='asks__item'>
                   <td class='price'>
                     {{parseFloat(item[0])}}
                   </td>
@@ -64,9 +68,17 @@
 </template>
 
 <script>
+import FilterWindow from '../components/FilterWindow'
+import DiffStream from '../components/DiffStream'
+
 export default {
+  components: {
+    FilterWindow,
+    DiffStream
+  },
   async fetch({store}) {
       await store.dispatch('depth/fetch')
+      store.dispatch('depth/connect')
   },
   computed: {
     depth() {
@@ -79,16 +91,29 @@ export default {
 <style lang='sass'>
   .table__container
     display: grid
-    justify-items: center
+    justify-self: center
+    grid-template-columns: 1fr 2fr
+    gap: $spacing
+    padding: $spacing
     background-color: $backgroundSecondary
+    @media screen and ( max-width: $lg )  
+      grid-template-columns: auto
+    .sidebar
+      display: grid
+      gap: $spacing
+      grid-template-rows: 1fr 3fr
     .table__card
       background-color: $backgroundPrimary
       text-align: center
-      width: 60%
-      margin: 20px 0
       padding: 10px 5px
       box-shadow: $shadow
       border-radius: $radius
+      .total
+        @media screen and ( max-width: $md )
+          display: none
+      .amount
+        @media screen and ( max-width: $xs )
+          display: none
       .header
         display: table
         width: 100%
@@ -99,7 +124,7 @@ export default {
         overflow: hidden
         table-layout: fixed
         transition: all .3s ease-in-out
-        max-height: 500px
+        max-height: 600px
         &::-webkit-scrollbar
           border-radius: $radius
           height: 10px
@@ -107,7 +132,7 @@ export default {
         
 
         &::-webkit-scrollbar-thumb 
-          background: #999
+          background: lighten($primary, 20)
           border-radius: $radius
         
 
@@ -128,18 +153,11 @@ export default {
             color: $fontSecondary
           .bids__item
             color: $success
-          
       tr
         @extend .header
         padding: 5px
-        &::nth-child(even)
-          &:hover
-            background-color: $primary
-
-        &:nth-child(add)
-          @extend ::nth-child(even)
-          
-
+        &:hover + td
+          background-color: $primary
       .bid
       .title
         color: $primary

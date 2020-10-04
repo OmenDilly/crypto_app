@@ -4,11 +4,7 @@
 			Кошелек
 		</div>
 		<div class="links">
-			<select name="choice">
-				<option value="first">First Value</option>
-				<option value="second" selected>Second Value</option>
-				<option value="third">Third Value</option>
-			</select>
+
 		</div>
 	</div>
 </template>
